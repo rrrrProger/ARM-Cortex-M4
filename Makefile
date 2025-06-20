@@ -5,8 +5,11 @@ all: main.hex
 main.o: main.s
 	arm-none-eabi-as -g -mcpu=cortex-m4 -mthumb main.s -o main.o
 
-main.elf: main.o main.ld
-	arm-none-eabi-ld main.o -T ./main.ld -o main.elf
+gpio.o: gpio.s
+	arm-none-eabi-as -g -mcpu=cortex-m4 -mthumb gpio.s -o gpio.o
+
+main.elf: main.o gpio.o main.ld
+	arm-none-eabi-ld main.o gpio.o -T ./main.ld -o main.elf
 
 main.hex: main.elf
 	arm-none-eabi-objcopy -O ihex main.elf main.hex

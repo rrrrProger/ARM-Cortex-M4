@@ -14,6 +14,11 @@ SECTIONS
 {
 	.text : {
 	      *(.text)
+	      *(.text.*)
+	      *(.rodata)
+	      *(.rodata.*)
+	      . = ALIGN(4);
+	      _etext = .;
 	}>FLASH
 
 	_flash_dstart = .;
@@ -21,6 +26,8 @@ SECTIONS
 	.data :  {
 	      _dstart = .;
 	      *(.data)
+	      *(.data.*)
+	      . = ALIGN(4);
 	      _dend = .;
 	}>RAM AT> FLASH  /* Load into FLASH, but live in RAM */
 
